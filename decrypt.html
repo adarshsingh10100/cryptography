@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decrypt Message</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            margin-top: 10px;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Decrypt Message</h1>
+        <textarea id="encryptedMessage" rows="6" placeholder="Enter the encrypted message here..."></textarea>
+        <input type="number" id="shift" placeholder="Enter shift value (e.g., 3)" />
+        <button onclick="decryptMessage()">Decrypt</button>
+        <div class="output" id="decryptedMessage"></div>
+    </div>
+    <script>
+        function decryptMessage() {
+            const message = document.getElementById('encryptedMessage').value;
+            const shift = parseInt(document.getElementById('shift').value);
+            const decryptedMessage = shiftMessage(message, -shift);
+            document.getElementById('decryptedMessage').textContent = decryptedMessage;
+        }
+
+        function shiftMessage(message, shift) {
+            return message.split('').map(char => {
+                if (char >= 'a' && char <= 'z') {
+                    return String.fromCharCode((char.charCodeAt(0) - 'a'.charCodeAt(0) + shift + 26) % 26 + 'a'.charCodeAt(0));
+                } else if (char >= 'A' && char <= 'Z') {
+                    return String.fromCharCode((char.charCodeAt(0) - 'A'.charCodeAt(0) + shift + 26) % 26 + 'A'.charCodeAt(0));
+                } else {
+                    return char;
+                }
+            }).join('');
+        }
+    </script>
+</body>
+</html>
